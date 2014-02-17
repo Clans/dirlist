@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <style type='text/css'>
+        .search-box, .close-icon, .search-wrapper {
+            position: relative;
+            padding: 8px;
+        }
+
+        .search-wrapper {
+            width: 500px;
+            margin: 20px 0 15px 34px;
+        }
+
+        .search-box {
+            width: 80%;
+            border: 1px solid #ccc;
+            outline: 0;
+            border-radius: 10px;
+            box-shadow: inset 0 0px 3px #ccc;
+            background-color: #f9f9f9;
+        }
+
+        .search-box:focus {
+            border: 1px solid #999;
+            background-color: #fff;
+        }
+
+        .close-icon {
+            border: 1px solid transparent;
+            background-color: transparent;
+            display: inline-block;
+            vertical-align: middle;
+            outline: 0;
+            cursor: pointer;
+        }
+
+        .close-icon:after {
+            content: "X";
+            display: block;
+            width: 15px;
+            height: 15px;
+            position: absolute;
+            background-color: #cccccc;
+            z-index: 1;
+            right: 30px;
+            top: 0;
+            bottom: 6px;
+            margin: auto;
+            padding: 2px;
+            border-radius: 50%;
+            text-align: center;
+            color: white;
+            font-weight: normal;
+            font-family: Verdana,serif;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .search-box:not(:valid) ~ .close-icon {
+            display: none;
+        }
+
+        #listContainer {
+            width: 600px;
+            margin: 0 auto;
+        }
+
+        #expList li {
+            list-style-type: none;
+        }
+
+        .listControl {
+            margin: 15px 0 15px 40px;
+        }
+
+        .listControl a {
+            background-color: #f9f9f9;
+            border: 1px solid #dcdcdc;
+            color: #666666;
+            cursor: pointer;
+            height: 1.5em;
+            line-height: 1.5em;
+            margin-right: 5px;
+            padding: 4px 10px;
+            font-weight: bold;
+            border-radius: 10px;
+        }
+
+        .listControl a:hover {
+            background-color: #e9e9e9;
+            border: 1px solid #ccc;
+        }
+
+        #expList div {
+            padding: 2px 0 2px 6px;
+            border: 1px solid #fff;
+        }
+
+        #expList div:hover {
+            background-color: #e9e9e9;
+            cursor: pointer;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        #expList .file:before {
+            content: "\00A0\00A0\00A0\00A0\00A0";
+        }
+
+        #expList .collapsed:before {
+            content: "\25BA\00A0";
+        }
+
+        #expList .expanded:before {
+            content: "\25BC\00A0";
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $("#expList li").children('ul').hide();
+            $("#expList li").on('click', function (event) {
+                $(this).children('ul').stop().slideToggle(350);
+                $(this).has('ul').children(':first-child').toggleClass('expanded');
+                event.stopPropagation();
+            });
+            $('#expList li').has('ul').children(':first-child').addClass('collapsed');
+        });
+
+        $(function () {
+            $('#expandList').click(function (event) {
+                $("#expList li").children('ul').show();
+                $('#expList li').has('ul').children(':first-child').addClass('expanded');
+            });
+        });
+
+        $(function () {
+            $('#collapseList').click(function () {
+                $("#expList li").children('ul').hide();
+                $('#expList li').has('ul').children(':first-child').removeClass('expanded');
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="listContainer">
+    <div class="search-wrapper">
+        <form>
+            <input type="text" name="focus" required class="search-box" placeholder="Search..."/>
+            <button class="close-icon" type="reset"></button>
+        </form>
+    </div>
+    <div class="listControl"><a id="expandList">Expand All</a><a id="collapseList">Collapse All</a></div>
+    <ul id="expList">
+        <li>
+            <div class="folder">Dark Tranquillity-Construct (Limited Edition) CD 1-Construct-2013</div>
+            <ul>
+                <li>
+                    <div class="file">01. For Broken Words.mp3</div>
+                </li>
+                <li>
+                    <div class="file">02. The Science of Noise.mp3</div>
+                </li>
+                <li>
+                    <div class="file">03. Uniformity.mp3</div>
+                </li>
+                <li>
+                    <div class="file">04. The Silence In Between.mp3</div>
+                </li>
+                <li>
+                    <div class="file">05. Apathetic.mp3</div>
+                </li>
+                <li>
+                    <div class="file">06. What Only You Know.mp3</div>
+                </li>
+                <li>
+                    <div class="file">07. Endtime Hearts.mp3</div>
+                </li>
+                <li>
+                    <div class="file">08. State of Trust.mp3</div>
+                </li>
+                <li>
+                    <div class="file">09. Weight of the End.mp3</div>
+                </li>
+                <li>
+                    <div class="file">10. None Becoming.mp3</div>
+                </li>
+                <li>
+                    <div class="file">Cover.jpg</div>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div class="folder">Dark Tranquillity-Construct (Limited Edition) CD 2-Deconstruct-2013</div>
+            <ul>
+                <li>
+                    <div class="file">01. Immemorial.mp3</div>
+                </li>
+                <li>
+                    <div class="file">02. Photon Dreams.mp3</div>
+                </li>
+                <li>
+                    <div class="file">Cover.jpg</div>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div class="file">Doro - Breaking The Law.mp3</div>
+        </li>
+        <li>
+            <div class="file">Edvin Marton - Paganini 5.mp3</div>
+        </li>
+        <li>
+            <div class="file">index.html</div>
+        </li>
+        <li>
+            <div class="file">Michele McLaughlin - The North Sea.mp3</div>
+        </li>
+        <li>
+            <div class="file">Okean El'zi - Stina.mp3</div>
+        </li>
+        <li>
+            <div class="folder">Молот Ведьм</div>
+            <ul>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>
