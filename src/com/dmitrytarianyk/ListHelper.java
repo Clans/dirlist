@@ -215,33 +215,80 @@ public class ListHelper {
                 "\n" +
                 "#expList .expanded:before {\n" +
                 "    content: \"\\25BC\\00A0\";\n" +
+                "}\n" +
+                "\n" +
+                "#expList .hidden {\n" +
+                "    display: none;\n" +
+                "}\n" +
+                "\n" +
+                "#expList .found {\n" +
+                "    color: #FFF;\n" +
+                "    background-color: #000;\n" +
+                "}\n" +
+                "\n" +
+                "#expList .file {\n" +
+                "    text-transform: none;\n" +
                 "}");
         sbh.appendLine("</style>");
     }
 
     private void appendJs(StringBuilderHelper sbh) {
         sbh.appendLine("<script type=\"text/javascript\">");
-        sbh.appendLine("$(function () {\n" +
-                "    $(\"#expList li > ul\").hide();\n" +
-                "    $(\"#expList li\").click(function (event) {\n" +
-                "        $(this).children('ul').stop().slideToggle(250);\n" +
+        sbh.appendLine("jQuery(function () {\n" +
+                "    $(\"#expList li\").children('ul').hide();\n" +
+                "    $(\"#expList li\").on('click', function (event) {\n" +
+                "        $(this).children('ul').stop().slideToggle(350);\n" +
                 "        $(this).has('ul').children(':first-child').toggleClass('expanded');\n" +
                 "        event.stopPropagation();\n" +
                 "    });\n" +
-                "    $('#expList li > div.folder').addClass('collapsed');\n" +
-                "});\n" +
+                "    $('#expList li').has('ul').children(':first-child').addClass('collapsed');\n" +
                 "\n" +
-                "$(function () {\n" +
                 "    $('#expandList').click(function (event) {\n" +
-                "        $(\"#expList li > ul\").show();\n" +
-                "        $('#expList li > div.folder').addClass('expanded');\n" +
+                "        $(\"#expList li\").children('ul').show();\n" +
+                "        $('#expList li').has('ul').children(':first-child').addClass('expanded');\n" +
                 "    });\n" +
-                "});\n" +
                 "\n" +
-                "$(function () {\n" +
-                "    $('#collapseList').click(function() {\n" +
-                "        $(\"#expList li > ul\").hide();\n" +
-                "        $('#expList li > div.folder').removeClass('expanded');\n" +
+                "    $('#collapseList').click(function () {\n" +
+                "        $(\"#expList li\").children('ul').hide();\n" +
+                "        $('#expList li').has('ul').children(':first-child').removeClass('expanded');\n" +
+                "    });\n" +
+                "\n" +
+                "    var resetListState = function () {\n" +
+                "        $('.found').each(function () {\n" +
+                "            $(this).replaceWith(this.childNodes);\n" +
+                "        });\n" +
+                "        $('#expList .visible, #expList .hidden').removeClass('visible hidden');\n" +
+                "    };\n" +
+                "\n" +
+                "    $('#listContainer').on('click', '.close-icon', function () {\n" +
+                "        resetListState();\n" +
+                "    });\n" +
+                "\n" +
+                "    // Filter\n" +
+                "    $('.search-box').keyup(function () {\n" +
+                "        var $el = $(this);\n" +
+                "        if ($el.val()) {                                // Is input.search-box not empty\n" +
+                "            $('#expList .file, #listContainer .folder')\n" +
+                "                .parents('li')\n" +
+                "                .addClass('hidden')                 // All elements will be hidden\n" +
+                "                .end()                              // Go to selectors\n" +
+                "                .each(function () {\n" +
+                "                    var $elem = $(this);\n" +
+                "                    var textArr = $elem.text().split($el.val());\n" +
+                "                    if (textArr[1]) {\n" +
+                "                        var text = textArr[0];\n" +
+                "                        for (var i = 1, length = textArr.length; i < length; i++) {\n" +
+                "                            text += \"<span class='found'>\" + $el.val() + \"</span>\" + textArr[i];\n" +
+                "                        }\n" +
+                "                        $elem.html(text);\n" +
+                "                        $elem.parents('li').removeClass('hidden').addClass('visible');\n" +
+                "                    } else {\n" +
+                "                        $elem.closest('li').removeClass('visible');\n" +
+                "                    }\n" +
+                "                });\n" +
+                "        } else {\n" +
+                "            resetListState();\n" +
+                "        }\n" +
                 "    });\n" +
                 "});");
         sbh.appendLine("</script>");

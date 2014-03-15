@@ -111,3 +111,16 @@
 #expList .expanded:before {
     content: "\25BC\00A0";
 }
+
+#expList .hidden {
+    display: none;
+}
+
+#expList .found {
+    color: #FFF;
+    background-color: #000;
+}
+
+#expList .file {
+    text-transform: none;
+}
